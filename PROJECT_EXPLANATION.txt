@@ -1,0 +1,35 @@
+PROJECT TITLE
+ThreatVision AI: Cyber Attack Trend Prediction Using Cyber Threat Intelligence and Machine Learning
+
+PROBLEM STATEMENT
+Cyber attacks change rapidly over time. Security teams require a simple system that can analyze historical incident patterns and estimate future attack trends so that preventive controls can be prioritized.
+
+OBJECTIVE
+1. Analyze historical cyber attack data.
+2. Visualize attack frequency and distribution.
+3. Predict future attack counts using machine learning.
+4. Classify predicted threat levels.
+5. Provide simple preventive recommendations.
+
+MODULES
+1. Data Collection
+2. Data Preprocessing
+3. Threat Analytics
+4. Machine Learning Prediction
+5. Risk Assessment
+6. Web Dashboard
+
+ALGORITHM
+Linear Regression is trained separately for each attack category. The month number is the input feature and attack count is the output target. The model learns the historical trend and forecasts future attack counts.
+
+FRONTEND
+HTML + CSS + JavaScript + Chart.js
+
+BACKEND
+Python Flask with REST API endpoints.
+
+ML / DATA
+Pandas + Scikit-learn + Joblib
+
+DEMO FLOW
+Open dashboard -> inspect historical charts -> select attack type -> select future period -> click Run Prediction -> view predicted attack count, trend, risk and mitigation.

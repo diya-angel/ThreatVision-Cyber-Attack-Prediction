@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreatVision AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="landing-body">
+    <nav class="navbar">
+        <div class="brand">ThreatVision AI</div>
+        <a class="nav-button" href="/dashboard">Open Dashboard</a>
+    </nav>
+
+    <main class="hero">
+        <section class="hero-copy">
+            <div class="eyebrow">Cyber Threat Intelligence & Analytics — IA 3</div>
+            <h1>Cyber Attack<br><span>Trend Prediction</span></h1>
+            <p>Analyze historical cyber-attack patterns, visualize threat intelligence and predict upcoming attack trends using machine learning.</p>
+            <div class="hero-actions">
+                <a class="primary-button" href="/dashboard">Launch Analytics</a>
+                <a class="secondary-button" href="#features">Explore Features</a>
+            </div>
+        </section>
+        <section class="terminal-card">
+            <div class="terminal-top"><span></span><span></span><span></span></div>
+            <div class="terminal-content">
+                <p>&gt; threatvision.scan()</p>
+                <p class="muted">Loading cyber intelligence...</p>
+                <p>&gt; model.predict("Phishing")</p>
+                <div class="status-line"><b>STATUS</b><span>ACTIVE</span></div>
+                <div class="mini-stat"><small>Predicted Trend</small><strong>Increasing ↑</strong></div>
+                <div class="mini-stat"><small>Threat Level</small><strong>HIGH</strong></div>
+            </div>
+        </section>
+    </main>
+
+    <section class="features" id="features">
+        <article><span>01</span><h3>Threat Analytics</h3><p>View attack distribution and monthly cyber incident patterns.</p></article>
+        <article><span>02</span><h3>ML Prediction</h3><p>Use Linear Regression to forecast attack counts for upcoming months.</p></article>
+        <article><span>03</span><h3>Risk Assessment</h3><p>Convert predictions into Low, Medium, High or Critical risk levels.</p></article>
+    </section>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreatVision Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="brand side-brand">ThreatVision AI</div>
+        <div class="side-label">INTELLIGENCE CONSOLE</div>
+        <a class="side-link active" href="#overview">Dashboard</a>
+        <a class="side-link" href="#prediction">Trend Prediction</a>
+        <a class="side-link" href="#analytics">Threat Analytics</a>
+        <a class="side-link" href="/">Home</a>
+        <div class="system-card"><small>SYSTEM STATUS</small><div><span class="live-dot"></span> ML Engine Online</div></div>
+    </aside>
+
+    <main class="dashboard-main">
+        <header class="dash-header" id="overview">
+            <div><p class="eyebrow">CYBER THREAT INTELLIGENCE</p><h1>Security Analytics Dashboard</h1></div>
+            <div class="shield-badge">ML ACTIVE</div>
+        </header>
+
+        <section class="stats-grid">
+            <article class="stat-card"><small>TOTAL HISTORICAL ATTACKS</small><strong id="totalAttacks">—</strong><p>Across all monitored categories</p></article>
+            <article class="stat-card"><small>LATEST MONTH INCIDENTS</small><strong id="latestTotal">—</strong><p>Combined reported activity</p></article>
+            <article class="stat-card"><small>MOST FREQUENT THREAT</small><strong id="topThreat">—</strong><p>Highest cumulative volume</p></article>
+            <article class="stat-card warning"><small>CURRENT MODEL</small><strong>Linear Regression</strong><p>Attack-specific forecasting</p></article>
+        </section>
+
+        <section class="chart-grid" id="analytics">
+            <article class="panel"><div class="panel-title"><div><small>ANALYTICS</small><h2>Monthly Attack Trend</h2></div></div><canvas id="trendChart"></canvas></article>
+            <article class="panel"><div class="panel-title"><div><small>DISTRIBUTION</small><h2>Attack Categories</h2></div></div><canvas id="attackChart"></canvas></article>
+        </section>
+
+        <section class="prediction-grid" id="prediction">
+            <article class="panel prediction-panel">
+                <div class="panel-title"><div><small>MACHINE LEARNING</small><h2>Predict Future Threat Trend</h2></div></div>
+                <label for="attackType">Attack Type</label>
+                <select id="attackType">
+                    <option>Phishing</option><option>Malware</option><option>DDoS</option><option>Ransomware</option><option>SQL Injection</option>
+                </select>
+                <label for="monthsAhead">Forecast Period</label>
+                <select id="monthsAhead">
+                    <option value="1">Next Month</option>
+                    <option value="2">Next 2 Months</option>
+                    <option value="3">Next 3 Months</option>
+                    <option value="6">Next 6 Months</option>
+                </select>
+                <button class="primary-button full" onclick="predictTrend()">Run Prediction</button>
+            </article>
+
+            <article class="panel result-panel">
+                <div class="result-empty" id="emptyState">
+                    <div class="radar-icon">◎</div><h3>Prediction Engine Ready</h3><p>Select an attack type and forecast period, then run the model.</p>
+                </div>
+                <div id="resultBox" class="hidden">
+                    <small>PREDICTION RESULT</small>
+                    <h2 id="resultType">—</h2>
+                    <div class="result-cards">
+                        <div><small>Predicted Attacks</small><strong id="predictedValue">—</strong></div>
+                        <div><small>Trend</small><strong id="trendValue">—</strong></div>
+                        <div><small>Risk Level</small><strong id="riskValue">—</strong></div>
+                        <div><small>Confidence</small><strong id="confidenceValue">—</strong></div>
+                    </div>
+                    <div class="recommendation"><small>RECOMMENDED MITIGATION</small><p id="recommendationValue">—</p></div>
+                </div>
+            </article>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

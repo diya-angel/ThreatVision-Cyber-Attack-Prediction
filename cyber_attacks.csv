@@ -1,0 +1,61 @@
+month_number,date,attack_type,country,industry,severity,attack_count
+1,2025-01,Phishing,India,Banking,High,210
+2,2025-02,Phishing,India,Banking,High,225
+3,2025-03,Phishing,India,Banking,High,250
+4,2025-04,Phishing,India,Banking,High,265
+5,2025-05,Phishing,India,Banking,High,290
+6,2025-06,Phishing,India,Banking,High,315
+7,2025-07,Phishing,India,Banking,High,330
+8,2025-08,Phishing,India,Banking,High,360
+9,2025-09,Phishing,India,Banking,High,390
+10,2025-10,Phishing,India,Banking,High,420
+11,2025-11,Phishing,India,Banking,Critical,455
+12,2025-12,Phishing,India,Banking,Critical,490
+1,2025-01,Malware,India,IT,High,180
+2,2025-02,Malware,India,IT,High,188
+3,2025-03,Malware,India,IT,High,200
+4,2025-04,Malware,India,IT,High,215
+5,2025-05,Malware,India,IT,High,230
+6,2025-06,Malware,India,IT,High,245
+7,2025-07,Malware,India,IT,High,260
+8,2025-08,Malware,India,IT,High,280
+9,2025-09,Malware,India,IT,High,295
+10,2025-10,Malware,India,IT,High,310
+11,2025-11,Malware,India,IT,High,325
+12,2025-12,Malware,India,IT,High,345
+1,2025-01,DDoS,USA,Cloud,Medium,140
+2,2025-02,DDoS,USA,Cloud,Medium,155
+3,2025-03,DDoS,USA,Cloud,Medium,150
+4,2025-04,DDoS,USA,Cloud,Medium,170
+5,2025-05,DDoS,USA,Cloud,Medium,182
+6,2025-06,DDoS,USA,Cloud,High,195
+7,2025-07,DDoS,USA,Cloud,High,205
+8,2025-08,DDoS,USA,Cloud,High,220
+9,2025-09,DDoS,USA,Cloud,High,235
+10,2025-10,DDoS,USA,Cloud,High,250
+11,2025-11,DDoS,USA,Cloud,High,265
+12,2025-12,DDoS,USA,Cloud,High,280
+1,2025-01,Ransomware,UK,Healthcare,High,90
+2,2025-02,Ransomware,UK,Healthcare,High,105
+3,2025-03,Ransomware,UK,Healthcare,High,110
+4,2025-04,Ransomware,UK,Healthcare,High,125
+5,2025-05,Ransomware,UK,Healthcare,High,140
+6,2025-06,Ransomware,UK,Healthcare,High,155
+7,2025-07,Ransomware,UK,Healthcare,Critical,175
+8,2025-08,Ransomware,UK,Healthcare,Critical,195
+9,2025-09,Ransomware,UK,Healthcare,Critical,210
+10,2025-10,Ransomware,UK,Healthcare,Critical,230
+11,2025-11,Ransomware,UK,Healthcare,Critical,255
+12,2025-12,Ransomware,UK,Healthcare,Critical,280
+1,2025-01,SQL Injection,Germany,E-Commerce,Medium,115
+2,2025-02,SQL Injection,Germany,E-Commerce,Medium,118
+3,2025-03,SQL Injection,Germany,E-Commerce,Medium,125
+4,2025-04,SQL Injection,Germany,E-Commerce,Medium,135
+5,2025-05,SQL Injection,Germany,E-Commerce,Medium,145
+6,2025-06,SQL Injection,Germany,E-Commerce,Medium,152
+7,2025-07,SQL Injection,Germany,E-Commerce,Medium,160
+8,2025-08,SQL Injection,Germany,E-Commerce,Medium,168
+9,2025-09,SQL Injection,Germany,E-Commerce,Medium,175
+10,2025-10,SQL Injection,Germany,E-Commerce,Medium,185
+11,2025-11,SQL Injection,Germany,E-Commerce,High,195
+12,2025-12,SQL Injection,Germany,E-Commerce,High,205
