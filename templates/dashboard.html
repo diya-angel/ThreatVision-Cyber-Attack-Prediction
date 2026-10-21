@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,34 +15,73 @@
         <a class="side-link active" href="#overview">Dashboard</a>
         <a class="side-link" href="#prediction">Trend Prediction</a>
         <a class="side-link" href="#analytics">Threat Analytics</a>
+        <a class="side-link" href="#cicids">CICIDS2017 Evaluation</a>
         <a class="side-link" href="/">Home</a>
-        <div class="system-card"><small>SYSTEM STATUS</small><div><span class="live-dot"></span> ML Engine Online</div></div>
+        <div class="system-card">
+            <small>SYSTEM STATUS</small>
+            <div><span class="live-dot"></span> ML Engine Online</div>
+        </div>
     </aside>
 
     <main class="dashboard-main">
         <header class="dash-header" id="overview">
-            <div><p class="eyebrow">CYBER THREAT INTELLIGENCE</p><h1>Security Analytics Dashboard</h1></div>
+            <div>
+                <p class="eyebrow">CYBER THREAT INTELLIGENCE</p>
+                <h1>Security Analytics Dashboard</h1>
+            </div>
             <div class="shield-badge">ML ACTIVE</div>
         </header>
 
         <section class="stats-grid">
-            <article class="stat-card"><small>TOTAL HISTORICAL ATTACKS</small><strong id="totalAttacks">—</strong><p>Across all monitored categories</p></article>
-            <article class="stat-card"><small>LATEST MONTH INCIDENTS</small><strong id="latestTotal">—</strong><p>Combined reported activity</p></article>
-            <article class="stat-card"><small>MOST FREQUENT THREAT</small><strong id="topThreat">—</strong><p>Highest cumulative volume</p></article>
-            <article class="stat-card warning"><small>CURRENT MODEL</small><strong>Linear Regression</strong><p>Attack-specific forecasting</p></article>
+            <article class="stat-card">
+                <small>TOTAL HISTORICAL ATTACKS</small>
+                <strong id="totalAttacks">—</strong>
+                <p>Across all monitored categories</p>
+            </article>
+            <article class="stat-card">
+                <small>LATEST MONTH INCIDENTS</small>
+                <strong id="latestTotal">—</strong>
+                <p>Combined reported activity</p>
+            </article>
+            <article class="stat-card">
+                <small>MOST FREQUENT THREAT</small>
+                <strong id="topThreat">—</strong>
+                <p>Highest cumulative volume</p>
+            </article>
+            <article class="stat-card warning">
+                <small>FORECAST MODEL</small>
+                <strong>Linear Regression</strong>
+                <p>Monthly attack trend prediction</p>
+            </article>
         </section>
 
         <section class="chart-grid" id="analytics">
-            <article class="panel"><div class="panel-title"><div><small>ANALYTICS</small><h2>Monthly Attack Trend</h2></div></div><canvas id="trendChart"></canvas></article>
-            <article class="panel"><div class="panel-title"><div><small>DISTRIBUTION</small><h2>Attack Categories</h2></div></div><canvas id="attackChart"></canvas></article>
+            <article class="panel">
+                <div class="panel-title">
+                    <div><small>ANALYTICS</small><h2>Monthly Attack Trend</h2></div>
+                </div>
+                <canvas id="trendChart"></canvas>
+            </article>
+            <article class="panel">
+                <div class="panel-title">
+                    <div><small>DISTRIBUTION</small><h2>Attack Categories</h2></div>
+                </div>
+                <canvas id="attackChart"></canvas>
+            </article>
         </section>
 
         <section class="prediction-grid" id="prediction">
             <article class="panel prediction-panel">
-                <div class="panel-title"><div><small>MACHINE LEARNING</small><h2>Predict Future Threat Trend</h2></div></div>
+                <div class="panel-title">
+                    <div><small>MACHINE LEARNING</small><h2>Predict Future Threat Trend</h2></div>
+                </div>
                 <label for="attackType">Attack Type</label>
                 <select id="attackType">
-                    <option>Phishing</option><option>Malware</option><option>DDoS</option><option>Ransomware</option><option>SQL Injection</option>
+                    <option>Phishing</option>
+                    <option>Malware</option>
+                    <option>DDoS</option>
+                    <option>Ransomware</option>
+                    <option>SQL Injection</option>
                 </select>
                 <label for="monthsAhead">Forecast Period</label>
                 <select id="monthsAhead">
@@ -55,7 +95,9 @@
 
             <article class="panel result-panel">
                 <div class="result-empty" id="emptyState">
-                    <div class="radar-icon">◎</div><h3>Prediction Engine Ready</h3><p>Select an attack type and forecast period, then run the model.</p>
+                    <div class="radar-icon">◎</div>
+                    <h3>Prediction Engine Ready</h3>
+                    <p>Select an attack type and forecast period, then run the model.</p>
                 </div>
                 <div id="resultBox" class="hidden">
                     <small>PREDICTION RESULT</small>
@@ -64,13 +106,130 @@
                         <div><small>Predicted Attacks</small><strong id="predictedValue">—</strong></div>
                         <div><small>Trend</small><strong id="trendValue">—</strong></div>
                         <div><small>Risk Level</small><strong id="riskValue">—</strong></div>
-                        <div><small>Confidence</small><strong id="confidenceValue">—</strong></div>
+                        <div><small>Confidence Indicator</small><strong id="confidenceValue">—</strong></div>
                     </div>
-                    <div class="recommendation"><small>RECOMMENDED MITIGATION</small><p id="recommendationValue">—</p></div>
+                    <div class="recommendation">
+                        <small>RECOMMENDED MITIGATION</small>
+                        <p id="recommendationValue">—</p>
+                    </div>
                 </div>
             </article>
         </section>
+
+        <!-- CICIDS2017 model evaluation -->
+        <section class="panel" id="cicids" style="margin-top: 24px;">
+            <div class="panel-title">
+                <div>
+                    <small>REAL DATASET EVALUATION</small>
+                    <h2>CICIDS2017 Attack Detection Model</h2>
+                </div>
+                <span id="cicidsStatus">Checking model...</span>
+            </div>
+
+            <p>
+                Separate machine-learning classifier trained to distinguish
+                benign network traffic from attack traffic.
+            </p>
+
+            <div class="stats-grid" style="margin-top: 20px;">
+                <article class="stat-card">
+                    <small>ACCURACY</small>
+                    <strong id="cicidsAccuracy">—</strong>
+                    <p>Overall correct predictions</p>
+                </article>
+                <article class="stat-card">
+                    <small>PRECISION</small>
+                    <strong id="cicidsPrecision">—</strong>
+                    <p>Correct attack predictions</p>
+                </article>
+                <article class="stat-card">
+                    <small>RECALL</small>
+                    <strong id="cicidsRecall">—</strong>
+                    <p>Actual attacks detected</p>
+                </article>
+                <article class="stat-card">
+                    <small>F1-SCORE</small>
+                    <strong id="cicidsF1">—</strong>
+                    <p>Balance of precision and recall</p>
+                </article>
+            </div>
+
+            <div class="result-cards" style="margin-top: 18px;">
+                <div>
+                    <small>Training rows</small>
+                    <strong id="cicidsTrainRows">—</strong>
+                </div>
+                <div>
+                    <small>Test rows</small>
+                    <strong id="cicidsTestRows">—</strong>
+                </div>
+                <div>
+                    <small>Numeric features</small>
+                    <strong id="cicidsFeatures">—</strong>
+                </div>
+                <div>
+                    <small>Dataset</small>
+                    <strong>CICIDS2017</strong>
+                </div>
+            </div>
+
+            <p id="cicidsMessage" role="status" style="margin-top: 18px;">
+                Loading evaluation metrics...
+            </p>
+        </section>
     </main>
+
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    <script>
+    async function loadCICIDSMetrics() {
+        const status = document.getElementById("cicidsStatus");
+        const message = document.getElementById("cicidsMessage");
+
+        try {
+            const response = await fetch("/api/cicids-metrics");
+            const data = await response.json();
+
+            if (!response.ok || data.status !== "trained") {
+                status.textContent = "Training required";
+                message.textContent =
+                    data.message ||
+                    "Metrics are not available yet. Train the CICIDS2017 model first.";
+                return;
+            }
+
+            const percent = value =>
+                (Number(value) * 100).toFixed(2) + "%";
+
+            document.getElementById("cicidsAccuracy").textContent =
+                percent(data.accuracy);
+            document.getElementById("cicidsPrecision").textContent =
+                percent(data.precision);
+            document.getElementById("cicidsRecall").textContent =
+                percent(data.recall);
+            document.getElementById("cicidsF1").textContent =
+                percent(data.f1_score);
+
+            document.getElementById("cicidsTrainRows").textContent =
+                Number(data.train_rows).toLocaleString();
+            document.getElementById("cicidsTestRows").textContent =
+                Number(data.test_rows).toLocaleString();
+            document.getElementById("cicidsFeatures").textContent =
+                Number(data.feature_count).toLocaleString();
+
+            status.textContent = "Evaluation metrics loaded";
+            message.textContent =
+                "Dataset: " + data.dataset +
+                " | Task: " + data.task +
+                ". Metrics are from the saved evaluation results.";
+        } catch (error) {
+            status.textContent = "Unavailable";
+            message.textContent =
+                "Could not load model metrics. Check the backend and try again.";
+        }
+    }
+
+    loadCICIDSMetrics();
+    </script>
 </body>
 </html>
