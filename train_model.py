@@ -1,6 +1,5 @@
 
 import json
-import os
 
 import joblib
 import numpy as np
@@ -13,27 +12,26 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     f1_score,
+    confusion_matrix,
 )
 from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LinearRegression
 
 DATA_FILE = "cyber_attacks.csv"
 MODEL_FILE = "attack_models.pkl"
-
 CICIDS_MODEL_FILE = "cicids2017_model.pkl"
 CICIDS_METRICS_FILE = "cicids2017_metrics.json"
 
+
 def train_models():
-    """Keep the existing monthly trend prediction models."""
+    """Keep existing monthly trend models."""
     data = pd.read_csv(DATA_FILE)
     models = {}
 
     for attack_type, group in data.groupby("attack_type"):
         X = group[["month_number"]]
         y = group["attack_count"]
-
-        model = __import__(
-            "sklearn.linear_model", fromlist=["LinearRegression"]
-        ).LinearRegression()
+        model = LinearRegression()
         model.fit(X, y)
         models[attack_type] = model
 
@@ -41,10 +39,32 @@ def train_models():
     print(f"Saved {len(models)} monthly trend models.")
 
 
-def train_cicids2017():
-    """Train a separate binary classifier on a small CICIDS2017 subset."""
-    print("Loading CICIDS2017 dataset from Hugging Face...")
+def convert_labels(series):
+    """Convert binary numeric labels or BENIGN/attack text labels."""
+    if pd.api.types.is_numeric_dtype(series):
+        labels = pd.to_numeric(series, errors="raise").astype(int)
+        if not set(labels.unique()).issubset({0, 1}):
+            raise ValueError(f"Expected binary labels 0/1, found {sorted(labels.unique())}")
+        return labels
 
+    text = series.astype(str).str.strip().str.upper()
+    known = {"BENIGN", "BENIGNTRAFFIC", "0", "1"}
+    if not set(text.unique()).issubset(known):
+        # CICIDS2017 multiclass labels: BENIGN=0, all attacks=1.
+        return (text != "BENIGN").astype(int)
+
+    return text.map({
+        "BENIGN": 0,
+        "BENIGNTRAFFIC": 0,
+        "0": 0,
+        "1": 1,
+    }).astype(int)
+
+
+def train_cicids2017():
+    print("Loading CICIDS2017 dataset...")
+
+    # Keep the current dataset configuration for now.
     train_data = load_dataset(
         "lacg030175/CICIDS2017",
         "temporal",
@@ -64,27 +84,30 @@ def train_cicids2017():
         None,
     )
     if label_column is None:
-        raise ValueError(
-            f"Could not find a label column. Available columns: {list(train_df.columns)}"
-        )
+        raise ValueError(f"No label column found. Columns: {list(train_df.columns)}")
 
-    # Use numeric network-traffic features only; exclude the target label.
     feature_columns = [
         c for c in train_df.select_dtypes(include=np.number).columns
-        if c != label_column
+        if c.lower() not in {"label", "class", "target"}
     ]
     if not feature_columns:
-        raise ValueError("No numeric network-traffic features were found.")
+        raise ValueError("No numeric features found.")
 
     X_train = train_df[feature_columns].replace([np.inf, -np.inf], np.nan)
-    X_test = test_df[feature_columns].replace([np.inf, -np.inf], np.nan)
+    X_test = test_df.reindex(columns=feature_columns).replace(
+        [np.inf, -np.inf], np.nan
+    )
 
-    y_train = train_df[label_column].astype(str).str.strip().str.upper()
-    y_test = test_df[label_column].astype(str).str.strip().str.upper()
+    y_train = convert_labels(train_df[label_column])
+    y_test = convert_labels(test_df[label_column])
 
-    # Convert BENIGN to 0 and all attack labels to 1.
-    y_train = (y_train != "BENIGN").astype(int)
-    y_test = (y_test != "BENIGN").astype(int)
+    print("Training class counts:", y_train.value_counts().to_dict())
+    print("Testing class counts:", y_test.value_counts().to_dict())
+
+    if y_train.nunique() < 2:
+        raise ValueError("Training data must contain both benign and attack examples.")
+    if y_test.nunique() < 2:
+        raise ValueError("Test data must contain both benign and attack examples.")
 
     pipeline = make_pipeline(
         SimpleImputer(strategy="median"),
@@ -96,17 +119,28 @@ def train_cicids2017():
         ),
     )
 
-    print(f"Training on {len(X_train):,} rows and {len(feature_columns)} features...")
+    print(f"Training on {len(X_train)} rows, {len(feature_columns)} features.")
     pipeline.fit(X_train, y_train)
-
     predictions = pipeline.predict(X_test)
+
+    tn, fp, fn, tp = confusion_matrix(
+        y_test, predictions, labels=[0, 1]
+    ).ravel()
 
     metrics = {
         "dataset": "CICIDS2017",
-        "task": "Binary classification: benign vs attack",
+        "task": "Binary classification: benign (0) vs attack (1)",
         "train_rows": int(len(X_train)),
         "test_rows": int(len(X_test)),
         "feature_count": int(len(feature_columns)),
+        "train_benign_rows": int((y_train == 0).sum()),
+        "train_attack_rows": int((y_train == 1).sum()),
+        "test_benign_rows": int((y_test == 0).sum()),
+        "test_attack_rows": int((y_test == 1).sum()),
+        "true_negatives": int(tn),
+        "false_positives": int(fp),
+        "false_negatives": int(fn),
+        "true_positives": int(tp),
         "accuracy": round(float(accuracy_score(y_test, predictions)), 4),
         "precision": round(float(precision_score(y_test, predictions, zero_division=0)), 4),
         "recall": round(float(recall_score(y_test, predictions, zero_division=0)), 4),
@@ -120,10 +154,7 @@ def train_cicids2017():
     with open(CICIDS_METRICS_FILE, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
 
-    print("CICIDS2017 evaluation metrics:")
     print(json.dumps(metrics, indent=2))
-    print(f"Saved model to {CICIDS_MODEL_FILE}")
-    print(f"Saved metrics to {CICIDS_METRICS_FILE}")
 
 
 if __name__ == "__main__":
